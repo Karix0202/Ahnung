@@ -1,6 +1,6 @@
 #include "private/Time.h"
 
-void Hour::AddMin()
+void Time::AddMin()
 {
     if (mins + 1 == 60)
     {
@@ -13,7 +13,7 @@ void Hour::AddMin()
     }
 }
 
-void Hour::AddHour()
+void Time::AddHour()
 {
     if (hours + 1 == 25)
     {
@@ -25,7 +25,7 @@ void Hour::AddHour()
     }
 }
 
-void Hour::Reset()
+void Time::Reset()
 {
     mins = 0;
     hours = 0;

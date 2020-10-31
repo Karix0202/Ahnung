@@ -1,7 +1,7 @@
 #ifndef HOUR_H
 #define HOUR_H
 
-class Hour
+class Time
 {
 private:
     int hours = 0;

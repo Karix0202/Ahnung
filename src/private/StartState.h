@@ -3,6 +3,7 @@
 
 #include "State.h"
 #include <LiquidCrystal_I2C.h>
+#include "Time.h"
 
 class StartState : public State
 {
@@ -10,7 +11,7 @@ public:
     void Setup() override;
     void Loop() override;
 
-    StartState(LiquidCrystal_I2C* _lcd);
+    StartState(LiquidCrystal_I2C* _lcd, int* _managerState, int _bHours, int _bMins);
 private:
     /**
      * Number between 0 and 2
@@ -25,10 +26,19 @@ private:
     int bHours;
     bool bHoursState = 0x0;
 
-    int bMinutes;
+    int bMins;
     bool bMinutesState = 0x0;
 
+    bool isStartCleared = false;
+    Time tStart;
 
+    bool isEndCleared = false;
+    Time tEnd;
+
+    bool isNowCleared = false;
+    Time tNow;
+
+    void Reset();
 };
 
 #endif
