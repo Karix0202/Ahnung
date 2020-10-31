@@ -4,12 +4,17 @@
 #include <LiquidCrystal_I2C.h>
 #include "private/State.h"
 
-StartState::StartState(LiquidCrystal_I2C* _lcd, int* _managerState, int _bHours, int _bMins, int _bOk) : State(_lcd)
+StartState::StartState(LiquidCrystal_I2C* _lcd, int* _managerState, int _bHours, int _bMins, 
+               int _bOk, Time* _tStart, Time* _tEnd,
+               Time* _tNow) : State(_lcd)
 {
     managerState = _managerState;
     bHours = bHours;
     bMins = _bMins;
     bOk = _bOk;
+    tStart = _tStart;
+    tEnd = _tEnd;
+    tNow = _tNow;
 }
 
 void StartState::Setup()
@@ -52,39 +57,34 @@ void StartState::Loop()
     }
 }
 
-void StartState::Reset()
-{
-    lcd->clear();
-
-    tStart.Reset();
-    tEnd.Reset();
-    tNow.Reset();
-
-    ownState = 0;
-}
-
-void StartState::Display(Time time, String caption)
+void StartState::Display(Time* time, String caption)
 {
     lcd->home();
     lcd->print(caption);
 
     lcd->setCursor(11, 2);
-    lcd->print(time.ToString());
+    lcd->print(time->ToString());
 }
 
-void StartState::SetTime(Time& time)
+void StartState::SetTime(Time* time)
 {
     bHoursState = digitalRead(bHours);
     if (bHoursState)
     {
-        time.AddHour();
+        time->AddHour();
         delay(125);
     }
 
     bMinsState = digitalRead(bMins);
     if (bMinsState)
     {
-        time.AddMin();
+        time->AddMin();
         delay(125);
     }
+}
+
+void StartState::ResetState()
+{
+    ownState = 0;
+    lcd->clear();
 }

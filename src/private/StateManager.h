@@ -3,6 +3,8 @@
 
 #include <LiquidCrystal_I2C.h>
 #include "StartState.h"
+#include "Time.h"
+#include <Arduino.h>
 
 class StateManager
 {
@@ -14,9 +16,19 @@ private:
     **/
     int state = 0;
 
+    Time tStart;
+    Time tEnd;
+    Time tNow;
+
     StartState* startState;
+
+    int bReset;
+    int bResetState = LOW;
+
+    void Reset();
 public:
-    StateManager(LiquidCrystal_I2C* _lcd, int _bHours, int _bMins, int _bOk);
+    StateManager(LiquidCrystal_I2C* _lcd, int _bReset, int _bHours, int _bMins,
+                 int _bOk, int _bSwitch);
 
     void Setup();
     void Loop();

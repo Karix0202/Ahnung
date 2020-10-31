@@ -12,7 +12,11 @@ public:
     void Setup() override;
     void Loop() override;
 
-    StartState(LiquidCrystal_I2C* _lcd, int* _managerState, int _bHours, int _bMins, int _bOk);
+    StartState(LiquidCrystal_I2C* _lcd, int* _managerState, int _bHours, int _bMins, 
+               int _bOk, Time* _tStart, Time* _tEnd,
+               Time* _tNow);
+
+    void ResetState();
 private:
     /**
      * Number between 0 and 2
@@ -33,14 +37,13 @@ private:
     int bOk;
     bool bOkState = LOW;
 
-    void SetTime(Time& time);
+    void SetTime(Time* time);
 
-    Time tStart;
-    Time tEnd;
-    Time tNow;
+    Time* tStart;
+    Time* tEnd;
+    Time* tNow;
 
-    void Reset();
-    void Display(Time hour, String caption);
+    void Display(Time* hour, String caption);
 };
 
 #endif
