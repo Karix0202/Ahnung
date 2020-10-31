@@ -1,4 +1,4 @@
-#include "private/Hour.h"
+#include "private/Time.h"
 
 void Hour::AddMin()
 {
