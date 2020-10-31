@@ -28,7 +28,7 @@ private:
     bool bHoursState = LOW;
 
     int bMins;
-    bool bMinutesState = LOW;
+    bool bMinsState = LOW;
 
     int bOk;
     bool bOkState = LOW;

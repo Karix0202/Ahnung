@@ -47,6 +47,7 @@ void StartState::Loop()
         break;
     
     default:
+        (*managerState)++;
         break;
     }
 }
