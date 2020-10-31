@@ -33,6 +33,8 @@ private:
     int bOk;
     bool bOkState = LOW;
 
+    void SetTime(Time& time);
+
     Time tStart;
     Time tEnd;
     Time tNow;

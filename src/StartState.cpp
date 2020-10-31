@@ -33,14 +33,17 @@ void StartState::Loop()
     {
     case 0:
         Display(tStart, "Start");
+        SetTime(tStart);
         break;
 
     case 1:
         Display(tEnd, "Koniec");
+        SetTime(tEnd);
         break;
 
     case 2:
         Display(tNow, "Czas teraz");
+        SetTime(tNow);
         break;
     
     default:
@@ -66,4 +69,21 @@ void StartState::Display(Time time, String caption)
 
     lcd->setCursor(11, 2);
     lcd->print(time.ToString());
+}
+
+void StartState::SetTime(Time& time)
+{
+    bHoursState = digitalRead(bHours);
+    if (bHoursState)
+    {
+        time.AddHour();
+        delay(125);
+    }
+
+    bMinsState = digitalRead(bMins);
+    if (bMinsState)
+    {
+        time.AddMin();
+        delay(125);
+    }
 }
