@@ -4,6 +4,7 @@
 #include "State.h"
 #include <LiquidCrystal_I2C.h>
 #include "Time.h"
+#include <Arduino.h>
 
 class StartState : public State
 {
@@ -11,7 +12,7 @@ public:
     void Setup() override;
     void Loop() override;
 
-    StartState(LiquidCrystal_I2C* _lcd, int* _managerState, int _bHours, int _bMins);
+    StartState(LiquidCrystal_I2C* _lcd, int* _managerState, int _bHours, int _bMins, int _bOk);
 private:
     /**
      * Number between 0 and 2
@@ -24,21 +25,20 @@ private:
     int* managerState;
 
     int bHours;
-    bool bHoursState = 0x0;
+    bool bHoursState = LOW;
 
     int bMins;
-    bool bMinutesState = 0x0;
+    bool bMinutesState = LOW;
 
-    bool isStartCleared = false;
+    int bOk;
+    bool bOkState = LOW;
+
     Time tStart;
-
-    bool isEndCleared = false;
     Time tEnd;
-
-    bool isNowCleared = false;
     Time tNow;
 
     void Reset();
+    void Display(Time hour, String caption);
 };
 
 #endif

@@ -1,6 +1,8 @@
 #ifndef HOUR_H
 #define HOUR_H
 
+#include <Arduino.h>
+
 class Time
 {
 private:
@@ -10,6 +12,7 @@ public:
     void AddMin();
     void AddHour();
     void Reset();
+    String ToString();
 };
 
 #endif
