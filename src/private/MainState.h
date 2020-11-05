@@ -15,8 +15,21 @@ public:
     MainState(LiquidCrystal_I2C* _lcd, int _bSwitch);
 
 private:
-    int bSwitch;
+    int bSwitch; // switch pin, is ON or OFF
     int bSwitchState = LOW;
+
+    int relay; // 250V relay pin 
+
+    bool isOn = false;
+    void Switch();
+
+    void Reset();
+
+    void DisplayOnLcd();
+
+    Time* tStart;
+    Time* tEnd;
+    Time* tNow;
 };
 
 #endif
