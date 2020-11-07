@@ -22,7 +22,6 @@ void StartState::Setup()
     pinMode(bHours, INPUT);
     pinMode(bMins, INPUT);
     pinMode(bOk, INPUT);
-    isDisplayed = false;
     Serial.begin(9600);
 }
 
