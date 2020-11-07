@@ -5,11 +5,13 @@
 StateManager::StateManager(LiquidCrystal_I2C* _lcd, int _bReset, int _bHours, int _bMins, int _bOk, int _bSwitch)
 {
     startState = new StartState(_lcd, &state, _bHours, _bMins, _bOk, &tStart, &tEnd, &tNow);
+    bReset = _bReset;
 }
 
 void StateManager::Setup()
 {
     startState->Setup();
+    pinMode(bReset, INPUT);
 }
 
 void StateManager::Loop()

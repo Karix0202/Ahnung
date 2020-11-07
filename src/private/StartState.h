@@ -29,7 +29,7 @@ private:
     int* managerState;
 
     int bHours;
-    bool bHoursState = LOW;
+    bool bHoursState = 0x0;
 
     int bMins;
     bool bMinsState = LOW;
@@ -42,6 +42,9 @@ private:
     Time* tStart;
     Time* tEnd;
     Time* tNow;
+
+    bool isDisplayed = false;
+    bool lastState = LOW;
 
     void Display(Time* hour, String caption);
 };
