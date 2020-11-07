@@ -3,7 +3,7 @@
 #include "private/Time.h"
 #include <LiquidCrystal_I2C.h>
 #include "private/State.h"
-bool wasDis = false;
+
 StartState::StartState(LiquidCrystal_I2C* _lcd, int* _managerState, int _bHours, int _bMins, 
                int _bOk, Time* _tStart, Time* _tEnd,
                Time* _tNow) : State(_lcd)

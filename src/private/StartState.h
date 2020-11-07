@@ -43,9 +43,6 @@ private:
     Time* tEnd;
     Time* tNow;
 
-    bool isDisplayed = false;
-    bool lastState = LOW;
-
     void Display(Time* hour, String caption);
 };
 
