@@ -39,3 +39,10 @@ String Time::ToString()
 
     return sHours + ":" + sMins;
 }
+String Time::RtcDateTimeToString(RTCDateTime rtcDateTime) 
+{
+    String sMins = (rtcDateTime.minute < 10) ? "0" + String(rtcDateTime.minute) : String(rtcDateTime.minute);
+    String sHours = (rtcDateTime.hour < 10) ? "0" + String(rtcDateTime.hour) : String(rtcDateTime.hour);
+
+    return sHours + ":" + sMins;
+}
