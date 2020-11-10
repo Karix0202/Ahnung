@@ -15,6 +15,8 @@ public:
 
     MainState(LiquidCrystal_I2C* _lcd, int _bSwitch);
 
+    void SetTime(Time* _tStart, Time* _tEnd, Time* _tNow);
+
 private:
     int bSwitch; // switch pin, is ON or OFF
     int bSwitchState = LOW;
@@ -22,6 +24,7 @@ private:
     int relay; // 250V/10A relay pin 
 
     bool isOn = false;
+    bool isOnLast = false;
     void Switch();
 
     void Reset();
@@ -29,8 +32,6 @@ private:
     void DisplayOnLcd();
     
     DS3231 rtc;
-
-    void SetTime(Time* _tStart, Time* _tEnd, Time* _tNow);
 
     Time* tStart;
     Time* tEnd;

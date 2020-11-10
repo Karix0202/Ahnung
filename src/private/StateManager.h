@@ -5,6 +5,7 @@
 #include "StartState.h"
 #include "Time.h"
 #include <Arduino.h>
+#include "MainState.h"
 
 class StateManager
 {
@@ -19,19 +20,25 @@ private:
     Time tStart;
     Time tEnd;
     Time tNow;
+    bool wasTimeSet = false;
 
     StartState* startState;
+    MainState* mainState;
 
     int bReset;
     int bResetState = LOW;
 
     void Reset();
+
 public:
     StateManager(LiquidCrystal_I2C* _lcd, int _bReset, int _bHours, int _bMins,
                  int _bOk, int _bSwitch);
 
     void Setup();
     void Loop();
+
+    void StateUp();
+    MainState* GetMainState();
 };
 
 #endif

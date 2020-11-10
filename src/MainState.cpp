@@ -25,27 +25,32 @@ void MainState::Switch()
     bSwitchState = digitalRead(bSwitch);
     if (bSwitchState) 
     {
+        isOnLast = isOn;
         isOn = !isOn;
-        delay(125);
+        delay(150);
     }
     DisplayOnLcd();
-
-    // check clock
-    if (rtc.getDateTime().hour >= tStart->GetHours() && rtc.getDateTime().minute >= tStart->GetMins())
-    {
-        isOn = true;
-    }
 }
 
 void MainState::Reset()
 {
     isOn = false;
+    isOnLast = false;
 }
 
 void MainState::DisplayOnLcd()
 {
-   lcd->home();
-   lcd->print("Stan: " + (isOn) ? "On" : "Off");
+    lcd->home();
+    if (isOn != isOnLast)
+    {
+        lcd->clear();
+        isOnLast = isOn;
+    } 
+    String sIsOn = (isOn) ? "ON" : "OFF";
+    lcd->print("Stan: " + sIsOn);
+    lcd->setCursor(0, 1);
+    RTCDateTime now = rtc.getDateTime();
+    lcd->print(Time::RtcDateTimeToString(now));
 }
 
 void MainState::SetTime(Time* _tStart, Time* _tEnd, Time* _tNow)
