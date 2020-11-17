@@ -10,12 +10,19 @@ MainState::MainState(LiquidCrystal_I2C* _lcd, int _bSwitch) : State(_lcd)
 
 void MainState::Setup()
 {
-   pinMode(bSwitch, INPUT);
-   rtc.begin();
+    pinMode(bSwitch, INPUT);
+    rtc.begin();
+    ClearAlarms();
+    Serial.begin(9600);
 }
 
 void MainState::Loop()
 {
+    // turn on relay
+    if (rtc.isAlarm1()) isOn = true;
+    // turn off relay
+    if (rtc.isAlarm2()) isOn = false;
+    
     Switch();    
     DisplayOnLcd();
 }
@@ -36,6 +43,7 @@ void MainState::Reset()
 {
     isOn = false;
     isOnLast = false;
+    ClearAlarms();
 }
 
 void MainState::DisplayOnLcd()
@@ -59,5 +67,23 @@ void MainState::SetTime(Time* _tStart, Time* _tEnd, Time* _tNow)
     tEnd = _tEnd;
 
     // dont care about date so i set it up to todays, hour, min, sec are the only important variables
-    rtc.setDateTime(2020, 11, 5, _tNow->GetHours(), _tNow->GetMins(), _tNow->GetSeconds());     
+    rtc.setDateTime(2020, 11, 5, _tNow->GetHours(), _tNow->GetMins(), _tNow->GetSeconds()); 
+
+    ClearAlarms();
+
+    /***
+     * Alarm1 - when to set isOn to true
+     * Alarm2 - when to set isOn to false
+     ***/
+    rtc.setAlarm1(0, tStart->GetHours(), tStart->GetMins(), 0, DS3231_MATCH_H_M_S);
+    rtc.setAlarm2(0, tEnd->GetHours(), tEnd->GetMins(), DS3231_MATCH_H_M);
+}
+
+void MainState::ClearAlarms()
+{
+    rtc.armAlarm1(false);
+    rtc.armAlarm2(false);
+
+    rtc.clearAlarm1();
+    rtc.clearAlarm2();
 }

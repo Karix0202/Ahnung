@@ -3,27 +3,14 @@
 
 void Time::AddMin()
 {
-    if (mins + 1 == 60)
-    {
-        AddHour();
-        mins = 0;
-    }
-    else
-    {
-        mins++;
-    }
+    if (mins + 1 == 60) mins = 0;
+    else mins++;
 }
 
 void Time::AddHour()
 {
-    if (hours + 1 == 25)
-    {
-        hours = 0;
-    }
-    else
-    {
-        hours++;
-    }
+    if (hours + 1 == 25) hours = 0;
+    else hours++;
 }
 
 void Time::Reset()

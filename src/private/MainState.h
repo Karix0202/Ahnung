@@ -16,6 +16,7 @@ public:
     MainState(LiquidCrystal_I2C* _lcd, int _bSwitch);
 
     void SetTime(Time* _tStart, Time* _tEnd, Time* _tNow);
+    void Reset();
 
 private:
     int bSwitch; // switch pin, is ON or OFF
@@ -27,7 +28,7 @@ private:
     bool isOnLast = false;
     void Switch();
 
-    void Reset();
+    void ClearAlarms();
 
     void DisplayOnLcd();
     

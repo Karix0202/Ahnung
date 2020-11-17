@@ -54,6 +54,7 @@ void StateManager::Reset()
     state = 0;
     wasTimeSet = false;
     startState->ResetState();
+    mainState->Reset();
 }
 
 void StateManager::StateUp()
