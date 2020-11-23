@@ -32,7 +32,7 @@ private:
 
 public:
     StateManager(LiquidCrystal_I2C* _lcd, int _bReset, int _bHours, int _bMins,
-                 int _bOk, int _bSwitch);
+                 int _bOk, int _bSwitch, int _relay);
 
     void Setup();
     void Loop();

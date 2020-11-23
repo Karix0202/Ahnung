@@ -13,7 +13,7 @@ public:
     void Setup() override;
     void Loop() override;
 
-    MainState(LiquidCrystal_I2C* _lcd, int _bSwitch);
+    MainState(LiquidCrystal_I2C* _lcd, int _bSwitch, int _relay);
 
     void SetTime(Time* _tStart, Time* _tEnd, Time* _tNow);
     void Reset();
@@ -21,12 +21,14 @@ public:
 private:
     int bSwitch; // switch pin, is ON or OFF
     int bSwitchState = LOW;
+    void SwitchRelay();
 
-    int relay; // 250V/10A relay pin 
+    int relay; // 250V/10A relay pin
+    int relayState = LOW;
 
     bool isOn = false;
     bool isOnLast = false;
-    void Switch();
+    void ButtonSwitch();
 
     void ClearAlarms();
 

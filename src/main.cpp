@@ -9,9 +9,10 @@
 #define B_OK 4
 #define B_RESET 5
 #define B_SWITCH 6
+#define RELAY 7
 
 LiquidCrystal_I2C* lcd = new LiquidCrystal_I2C(0x27, 16, 2);
-StateManager* stateManager = new StateManager(lcd, B_RESET, B_HOURS, B_MINS, B_OK, B_SWITCH);
+StateManager* stateManager = new StateManager(lcd, B_RESET, B_HOURS, B_MINS, B_OK, B_SWITCH, RELAY);
 
 void setup()
 {

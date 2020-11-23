@@ -3,10 +3,10 @@
 #include <Arduino.h>
 #include "private/MainState.h"
 
-StateManager::StateManager(LiquidCrystal_I2C* _lcd, int _bReset, int _bHours, int _bMins, int _bOk, int _bSwitch)
+StateManager::StateManager(LiquidCrystal_I2C* _lcd, int _bReset, int _bHours, int _bMins, int _bOk, int _bSwitch, int _relay)
 {
     startState = new StartState(_lcd, &state, _bHours, _bMins, _bOk, &tStart, &tEnd, &tNow);
-    mainState = new MainState(_lcd, _bSwitch);
+    mainState = new MainState(_lcd, _bSwitch, _relay);
     bReset = _bReset;
 }
 

@@ -2,41 +2,55 @@
 #include "private/State.h"
 #include <Arduino.h>
 
-MainState::MainState(LiquidCrystal_I2C* _lcd, int _bSwitch) : State(_lcd)
+MainState::MainState(LiquidCrystal_I2C* _lcd, int _bSwitch, int _relay) : State(_lcd)
 {
    lcd = _lcd;
-   bSwitch = _bSwitch; 
+   bSwitch = _bSwitch;
+   relay = _relay;
 }
 
 void MainState::Setup()
 {
     pinMode(bSwitch, INPUT);
+    pinMode(relay, OUTPUT);
     rtc.begin();
     ClearAlarms();
-    Serial.begin(9600);
 }
 
 void MainState::Loop()
 {
     // turn on relay
-    if (rtc.isAlarm1()) isOn = true;
+    if (rtc.isAlarm1())
+    {
+        isOn = true;
+        SwitchRelay();
+        DisplayOnLcd();
+        isOnLast = true;
+    }
+
     // turn off relay
-    if (rtc.isAlarm2()) isOn = false;
+    if (rtc.isAlarm2())
+    {
+        isOn = false;
+        SwitchRelay();
+        DisplayOnLcd();
+        isOnLast = false;
+    }
     
-    Switch();    
+    ButtonSwitch();
     DisplayOnLcd();
 }
 
-void MainState::Switch()
+void MainState::ButtonSwitch()
 {
     bSwitchState = digitalRead(bSwitch);
     if (bSwitchState) 
     {
         isOnLast = isOn;
         isOn = !isOn;
+        SwitchRelay();
         delay(150);
     }
-    DisplayOnLcd();
 }
 
 void MainState::Reset()
@@ -66,7 +80,7 @@ void MainState::SetTime(Time* _tStart, Time* _tEnd, Time* _tNow)
     tStart = _tStart;
     tEnd = _tEnd;
 
-    // dont care about date so i set it up to todays, hour, min, sec are the only important variables
+    // dont care about date. Hour, min, sec are the only important variables
     rtc.setDateTime(2020, 11, 5, _tNow->GetHours(), _tNow->GetMins(), _tNow->GetSeconds()); 
 
     ClearAlarms();
@@ -86,4 +100,9 @@ void MainState::ClearAlarms()
 
     rtc.clearAlarm1();
     rtc.clearAlarm2();
+}
+
+void MainState::SwitchRelay()
+{
+    digitalWrite(relay, isOn);
 }
